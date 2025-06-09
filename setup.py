@@ -5,42 +5,47 @@ such as its metadata, dependencies, version and more.
 
 '''
 
-from setuptools import find_packages, setup
+from setuptools import find_packages, setup     
+'''findpackages- function all the folders and whenever the file contain __init__.py then it is considered as a package'''
 from typing import List
 
 
-def get_requirements():
+
+
+def get_requirements()-> List[str]:
+    """
+        --> This function will return list of requirements
     """
 
-    This function will return list of requirements
-    
-    """
-    requirements_list:List[str] = []
+    requirement_list:List[str] = []
+
     try:
-        with open("requirements.txt", "r") as file:
-            #Read Lines
-            lines = file.readlines()
+        with open("requirements.txt") as f:
+            # Read lines from the f
+            lines = f.readlines()
 
-            ## Process Each Line:
-
+            # Process each line:
             for line in lines:
-                requirements = line.strip()
-                # Ignore empty line and -e.
+                ### Remove white space
+                requirement = line.strip()
 
-                if requirements and requirements!="-e .":
-                    requirements_list.append(requirements)
-
+                ###ignore emplty lines and -e .
+                if requirement and requirement !='-e .':
+                    requirement_list.append(requirement)
+    
     except FileNotFoundError:
-        print("requirements.txt file not found!")
+        print("No requirements.txt file found")
 
-    return requirements_list
+    return requirement_list
+
+
+## Setup our meta data:
 
 setup(
-    name = "NetworkSecurity",
-    version="0.0.1",
-    author="Arockia Anand Raj",
+    name= "NetworkSecurity",
+    version="1.0",
+    author="Anand",
     author_email="aroanand3@gmail.com",
     packages=find_packages(),
-    requires=get_requirements()
-
+    install_requires=get_requirements(),
 )
